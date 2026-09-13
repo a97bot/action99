@@ -43,8 +43,15 @@ jobs:
           sudo docker compose up --build -d
 
       - name: Keep Bot running
+        working-directory: mltb
         run: |
+          echo "Bot is running for 21450 seconds..."
+          sudo docker compose logs -f &
+          LOG_PID=$!
+
           sleep 21450
+
+          kill $LOG_PID || true
 
       - name: Increment loop.txt and push
         run: |
